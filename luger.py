@@ -31,25 +31,23 @@ def sisendi_otsimine(sisend):#listina
     valitud_joogid = []
     
 
-    for võti, sisu in retseptid.items():
+    for võti, sisu in retseptid_otsing.items():
+        muutuja = sisu
         for osa in sisend:
-            if osa in sisu[0]:
-                valitud_joogid.append(võti)
+            if osa in muutuja:
+                muutuja.remove(osa)
+                if muutuja == []:
+                    valitud_joogid.append(võti)
                 
-    sobilikud_joogid = set(valitud_joogid)
-    
-    lõplikud_joogid = []
-    for jook in sobilikud_joogid:
-        if len(sisend) == valitud_joogid.count(jook):
-            lõplikud_joogid.append(jook)
-
-    return lõplikud_joogid
+    return valitud_joogid
 
 # valitud joogi väljastmaiseks  
 def joogiväljund(jook):
     print(jook)
     print(retseptid[jook][0])
     print(retseptid[jook][1])
+    print(retseptid[jook][2])
+
 
 # otsib olulisemad joogid listidest ja tagastab nende listi
 def koostis_osadenimi(retsept):
@@ -136,9 +134,8 @@ vajalikud_koostisosad = koostis_osadenimi(retsept)
 retseptid_otsing = retseptid_otsinguks(retseptid, vajalikud_koostisosad)
 
 
-#print(joogiväljund('Mojito'))
+print(joogiväljund('Mojito'))
 
 
-print(retseptid_otsing)
 
-#print(sisendi_otsimine(['Rum', 'Lime Juice']))
+print(sisendi_otsimine(['Tequila', 'White Rum', 'Sugar Syrup', 'Lime Juice', 'Dry Vermouth', 'Gin', 'Sugar']))
