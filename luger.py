@@ -43,10 +43,7 @@ def sisendi_otsimine(sisend):#listina
 
 # valitud joogi väljastmaiseks  
 def joogiväljund(jook):
-    print(jook)
-    print(retseptid[jook][0])
-    print(retseptid[jook][1])
-    print(retseptid[jook][2])
+    return retseptid[jook]
 
 
 # otsib olulisemad joogid listidest ja tagastab nende listi
@@ -144,3 +141,7 @@ retseptid_otsing = retseptid_otsinguks(retseptid, vajalikud_koostisosad)
 
 
 
+<<<<<<< HEAD
+=======
+print(sisendi_otsimine(['Tequila', 'White Rum', 'Sugar Syrup', 'Lime Juice', 'Dry Vermouth', 'Gin', ]))
+>>>>>>> 92a6bb558211639ae7a872d054f8944c62293899
