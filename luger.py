@@ -30,13 +30,14 @@ def sisendi_otsimine(sisend):#listina
     
     valitud_joogid = []
     
+    
 
     for võti, sisu in retseptid_otsing.items():
-        muutuja = sisu
+        test = []
         for osa in sisend:
-            if osa in muutuja:
-                muutuja.remove(osa)
-                if muutuja == []:
+            if osa in sisu:
+                test.append(osa)
+                if sisu == test:
                     valitud_joogid.append(võti)
                 
     return valitud_joogid
@@ -137,11 +138,9 @@ retseptid_otsing = retseptid_otsinguks(retseptid, vajalikud_koostisosad)
 
 #joogiväljund('Mojito')
 #print(sisendi_otsimine(['Tequila', 'White Rum', 'Sugar Syrup', 'Lime Juice', 'Dry Vermouth', 'Gin', 'Sugar']))
+#print(sisendi_otsimine(['Tequila', 'White Rum', 'Sugar Syrup', 'Lime Juice', 'Dry Vermouth', 'Gin', 'Sugar']))
+#print(sisendi_otsimine(['Tequila', 'White Rum', 'Sugar Syrup', 'Lime Juice', 'Dry Vermouth', 'Gin', 'Sugar']))
 
 
 
 
-<<<<<<< HEAD
-=======
-print(sisendi_otsimine(['Tequila', 'White Rum', 'Sugar Syrup', 'Lime Juice', 'Dry Vermouth', 'Gin', ]))
->>>>>>> 92a6bb558211639ae7a872d054f8944c62293899
