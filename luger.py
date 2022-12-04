@@ -43,10 +43,7 @@ def sisendi_otsimine(sisend):#listina
 
 # valitud joogi väljastmaiseks  
 def joogiväljund(jook):
-    print(jook)
-    print(retseptid[jook][0])
-    print(retseptid[jook][1])
-    print(retseptid[jook][2])
+    return retseptid[jook]
 
 
 # otsib olulisemad joogid listidest ja tagastab nende listi
@@ -138,4 +135,4 @@ print(joogiväljund('Mojito'))
 
 
 
-print(sisendi_otsimine(['Tequila', 'White Rum', 'Sugar Syrup', 'Lime Juice', 'Dry Vermouth', 'Gin', 'Sugar']))
+print(sisendi_otsimine(['Tequila', 'White Rum', 'Sugar Syrup', 'Lime Juice', 'Dry Vermouth', 'Gin', ]))
