@@ -112,8 +112,12 @@ def sisu_eraldi(string):
                 ainult_vajalikud_koostisosad.append(vajalik[1])
     return ainult_vajalikud_koostisosad
 
-
-              
+"""def anna_joogid():
+    a=[]
+    for el in jook:
+        a.append(el[0])
+    return a
+"""              
 
 # kogu sõnastik kus on kõik joogi kohta käiv info
 retseptid = {}
@@ -134,8 +138,9 @@ vajalikud_koostisosad = koostis_osadenimi(retsept)
 retseptid_otsing = retseptid_otsinguks(retseptid, vajalikud_koostisosad)
 
 
-print(joogiväljund('Mojito'))
+#joogiväljund('Mojito')
+#print(sisendi_otsimine(['Tequila', 'White Rum', 'Sugar Syrup', 'Lime Juice', 'Dry Vermouth', 'Gin', 'Sugar']))
 
 
 
-print(sisendi_otsimine(['Tequila', 'White Rum', 'Sugar Syrup', 'Lime Juice', 'Dry Vermouth', 'Gin', 'Sugar']))
+

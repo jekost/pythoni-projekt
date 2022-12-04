@@ -1,38 +1,113 @@
+from luger import *
+
 from tkinter import *
 from tkinter import ttk
-from tkinter import messagebox
 
-#def otsi_komponente():
-koostisosad=[
-    "Tequila",
-    "Sugar",
-    "Rum",
-    "Soda"
-]
+#FUNK MIS KÄIVATAKSE JUHUL KUI KASTI VAJUTATAKSE
+def tagasta():
+    i=0
+    output=[]
+    for kast in kastid:
+        if kast.var.get()==1:
+            try:
+                output.append(vähem_koostisosi[i])
+            except:
+                output.append(koostisosad[i])
+        i+=1
+    print(output) #printib valitud koostisosad
+    print(sisendi_otsimine(output))
+    print()
 
-raam=Tk()
-raam.title("cocktail time")
-raam.geometry("600x400")
+def tee_kastid():
+    rida = 1
+    global kastid
+    kastid = {}
+    for koostisosa in range(len(koostisosad)):
+        nimi = koostisosad[koostisosa]
+        rida += 1
+        current_var = IntVar()
+        #######
+        current_box = Checkbutton(raam, text=nimi, variable=current_var, background="lavender", command=tagasta)
+        current_box.grid(row=rida, sticky=W)
+        current_box.var = current_var
+        kastid[current_box] = nimi
+
+def tee_kastid_otsi():#teeb ainult need kastid kus on sõne sees ("u"->"Rum","Sugar")
+    sõne=tk_name.get()
+    rida = 1
+    global kastid
+    global vähem_koostisosi
+    kastid = {}
+    vähem_koostisosi=[]
+    for koostisosa in koostisosad:
+        if sõne.lower() in koostisosa.lower():
+            vähem_koostisosi.append(koostisosa)
+            #nüüd on olemas väiksem list, {koostisosa:index, ko2:in2, ..}
+
+    for koostisosa in range(len(vähem_koostisosi)):
+        nimi = vähem_koostisosi[koostisosa]
+        rida += 1
+        current_var = IntVar()
+        current_box = Checkbutton(raam, text=nimi, variable=current_var, background="lavender", command=tagasta)
+        current_box.grid(row=rida, sticky=W)
+        current_box.var = current_var
+        kastid[current_box] = nimi
+
+def text_changed(*args):
+    print( tk_name.get() )
+    for kast in kastid:
+        kast.destroy()
+    tee_kastid_otsi()
+
+koostisosad=['White Rum', 'Sugar Syrup', 'Lime Juice', 'Gin', 'Dry Vermouth', 'Bourbon', 'Angostura Bitters', 'Orange Bitters', 'Citrus Vodka', 'Triple Sec', 'Cranberry Juice', 'Cachaca', 'Vodka', 'Coffee Liqueur', 'Cream', 'Milk', 'Pineapple Juice', 'Coconut Cream', 'Sweet Red Vermouth', 'Campari', 'Créme de Mure', 'Lemon Juice', 'Tequila', 'Simple Syrup', 'Dark Rum', 'Anejo Rum', 'Cola', 'Rye Whiskey', 'Absinthe', ' Peychauds Bitters', 'Peppered Vodka', 'Sweet Vermouth', 'Tomato Juice', 'Tobasco sauce', 'Salt', 'Pepper', 'Gomme syrup', 'Light Rum', 'Orgeat Syrup', 'Amaretto', 'Egg-White', 'Cherry Heering', 'Benedictine', 'Soda Water', 'Chambord', ' Pineapple Juice', 'Vanilla Vodka', 'Kahlua', 'Bacardi Rum', 'Strawberry Liqueur', 'Lime juice', 'Caorunn Gin', 'Raspberry Syrup', 'Knob Creek Bourbon', 'Bourbon Whiskey', 'Apple Schapps', 'Brandy', 'Créme de Cacao', 'Pink Grapefruit Juice', 'Runny Honey', 'Scotch Whisky', 'Whiskey Liqueur', 'Pisco', 'Orange Juice', 'Champagne', 'Aged Rum', 'Creme de Banane', 'Creme de Mure', 'Orange Liqueur', 'Peach Schnapps', 'Créme de Cassis', 'Prosecco', 'Peach puree', 'Peach Bitters', 'Dry Sherry', 'Grapefruit Juice', 'Irish Cream Liqueur', 'freshly squeezed Orange Juice', 'Cognac', 'Double Cream', 'Raspberry Liqueur', 'Egg White', 'Scotch Whiskey', 'Maraschino Liqueur', 'Vanilla Sugar Syrup', 'Premium Gin', 'Lime Cordial', 'Baileys Cream Liqueur', 'Citron Vodka', 'Elderflower Cordial', 'Passoa', ' Lemon Juice', 'Grapefruit Soda', 'Squeezed Lemon Juice', 'Golden Rum', '151 Rum', 'Falernum', 'of Soda Water', 'Raspberry Vodka', 'Black Raspberry Liqueur', ' Cranberry Juice', 'Yellow Chartreuse', 'Blue WKD', 'Port', ' Black Raspberry Liqueur', 'Melon Liqueur', 'Sweet and Sour mix', 'Lemon and Lime Soda', 'Drambuie', 'Grapefruit Bitters']
+koostisosad=['Tequila', 'White Rum', 'Sugar Syrup', 'Lime Juice', 'Dry Vermouth', 'Gin', 'Sugar']
+
+#MAIN
+main=Tk()
+main.title("cocktail time")
+#main.geometry("600x240")
+
+#RAAM KUS SEES ON CHECKBOXID,LABEL
+raam=Canvas(main,bg="lavender")
+raam.grid(sticky="n,e,w,s")
+
+#vaheraam
+vaheraam=Frame(raam)
 
 #LABEL "Mis koostisosad sul olemas on?"
-silt=ttk.Label(raam,text="Mis koostisosad sul olemas on?")
-silt.grid(row=1)
+silt=ttk.Label(raam,text="Mis koostisosad sul olemas on?",background="lavender")
+silt.grid(sticky="w")
 
-#CHECKBOXES
-koostisosa_nupp_value={}
-for koostisosa in koostisosad:
-    koostisosa_nupp_value[koostisosa]=False
-
-
-print(koostisosa_nupp_value)
-n=1
-for koostisosa in koostisosad:
-    n+=1
-    Checkbutton(raam, text=koostisosa, variable=koostisosa_nupp_value[koostisosa]).grid(row=n, sticky=W)
+#SEARCHBOX
+tk_name = StringVar()
+tk_name.trace("w",callback=text_changed)
+sisend = Entry(raam, textvariable=tk_name)
+sisend.grid()
 
 
 
-raam.mainloop()
+#SCROLLWHEEL
+#scroll=Scrollbar(raam, command=raam.yview)
+#scroll.grid(sticky="n,e,s",rowspan=10)
+#raam["yscrollcommand"]=scroll
+#raam.configure(scrollregion=raam.bbox("all"))
+
+#scroll.config( command = raam.yview )
+
+#print(anna_joogid())
+
+
+
+
+tee_kastid()
+
+main.mainloop()
+
+
+
+
+
+
 
 
 
