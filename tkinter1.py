@@ -1,6 +1,6 @@
 from luger import *
 from tkinter import *
-from tkinter import ttk
+
 
 #FUNK MIS KÄIVATAKSE JUHUL KUI KASTI VAJUTATAKSE
 def tagasta():
@@ -21,11 +21,11 @@ def tagasta():
     for widget in vaheraam.winfo_children():
         widget.destroy()
 
-    misJooki = ttk.Label(vaheraam, text="Mis jooki sa teha tahad", background="lavender")
+    misJooki = Label(vaheraam, text="Mis jooki sa teha tahad", background="lavender")
     misJooki.grid(row=0,sticky="n")
 
     rida=1
-    lb=Listbox(vaheraam)
+    lb=Listbox(vaheraam,height=20)
 
     for jook in sisendi_otsimine(output):
         lb.insert(rida,jook)
@@ -41,8 +41,32 @@ def lbValik(synd):
         index = valik[0]
         data = synd.widget.get(index)
         print()
+
+        try:
+            for widget in retseptiraam.winfo_children():
+                widget.destroy()
+        except:
+            True
+
         for el in joogiväljund(data):
             print (el)
+
+        joogikoostisosad = Label(retseptiraam, text="sinu joogiks vajaminevad koostisosad:", bg="lavender")
+        joogikoostisosad.grid(column=3, row=0, sticky="nw")
+
+        joogiretsept = Label(retseptiraam, text="sinu joogi retsept:", bg="lavender")
+        joogiretsept.grid(column=3, row=2, sticky="nw")
+        prinditav_koostisosa=""
+        for koostiosa in joogiväljund(data)[0].split(","):
+            prinditav_koostisosa+="-"
+            prinditav_koostisosa+=koostiosa.strip()
+            prinditav_koostisosa+="\n"
+        prinditav_koostisosa=prinditav_koostisosa.strip()
+
+        joogi_koostisosad=Label(retseptiraam,text=prinditav_koostisosa,wraplength=200,justify="left")
+        joogi_koostisosad.grid(column=3,row=1,sticky="w")
+        joogi_retsept=Label(retseptiraam,text=joogiväljund(data)[1],wraplength=200,justify="left")
+        joogi_retsept.grid(column=3,row=3,sticky="w")
 
     else:
         print("")
@@ -96,6 +120,7 @@ koostisosad=['White Rum', 'Sugar Syrup', 'Lime Juice', 'Gin', 'Dry Vermouth', 'B
 #MAIN
 main=Tk()
 main.title("cocktail time")
+main.resizable(False, False)
 #main.geometry("600x240")
 
 #RAAM KUS SEES ON CHECKBOXID,LABEL
@@ -104,10 +129,30 @@ raam.grid()
 
 #vaheraam
 vaheraam=Frame(raam,bg="lavender")
-vaheraam.grid(column=1,rowspan=20, sticky="e")
+vaheraam.grid(column=1,rowspan=20, sticky="n")
+
+
+#parempoolne raam
+#see on retsepti, pildi jne jaoks
+retseptiraam=Frame(raam,bg="lavender")
+retseptiraam.grid(column=3,row=0,rowspan=20,sticky="ne")
+
+joogikoostisosad=Label(retseptiraam,text="sinu joogiks vajaminevad koostisosad:",bg="lavender")
+joogikoostisosad.grid(column=3,row=0,sticky="nw")
+
+tühi=Label(retseptiraam,text="",bg="lavender")#loll lahendus, aga ma olengi loll~
+tühi.grid(column=3,row=1,sticky="nw")
+
+joogiretsept=Label(retseptiraam,text="sinu joogi retsept:",bg="lavender")
+joogiretsept.grid(column=3,row=2,sticky="nw")
+
+
+
+
+
 
 #LABEL "Mis koostisosad sul olemas on?"
-silt=ttk.Label(raam,text="Mis koostisosad sul olemas on?",background="lavender")
+silt=Label(raam,text="Mis koostisosad sul olemas on?",background="lavender")
 silt.grid(row=0, sticky="w")
 
 #SEARCHBOX
@@ -117,19 +162,12 @@ sisend = Entry(raam, textvariable=tk_name)
 sisend.grid(row=1)
 
 
-misJooki = ttk.Label(vaheraam, text="Mis jooki sa teha tahad", background="lavender")
+misJooki = Label(vaheraam, text="Mis jooki sa teha tahad", background="lavender")
 misJooki.grid(row=0,sticky="n")
 
-lb=Listbox(vaheraam)
+lb=Listbox(vaheraam,height=20)
 lb.grid()
 
-#SCROLLWHEEL
-#scroll=Scrollbar(raam, command=raam.yview)
-#scroll.grid(sticky="n,e,s",rowspan=10)
-#raam["yscrollcommand"]=scroll
-#raam.configure(scrollregion=raam.bbox("all"))
-
-#scroll.config( command = raam.yview )
 
 #print(anna_joogid())
 
