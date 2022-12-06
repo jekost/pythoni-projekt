@@ -17,14 +17,10 @@ def tagasta():
                 output.append(koostisosad[i])
         i+=1
 
-
-
-
-
     for widget in vaheraam.winfo_children():
         widget.destroy()
 
-    misJooki = Label(vaheraam, text="Mis jooki sa teha tahad", background="lavender")
+    misJooki = Label(vaheraam, text="what are you feeling?", background="lavender")
     misJooki.grid(row=0,sticky="n")
 
     rida=1
@@ -40,8 +36,6 @@ def tagasta():
 
 
 pildid = []
-
-
 def lbValik(synd):
     valik = synd.widget.curselection()
     if valik:
@@ -58,11 +52,13 @@ def lbValik(synd):
         for el in joogiväljund(data):
             print (el)
 
-        joogikoostisosad = Label(retseptiraam, text="sinu joogiks vajaminevad koostisosad:", bg="lavender")
+        joogikoostisosad = Label(retseptiraam, text="the ingredients necessary for your drink:", bg="lavender")
         joogikoostisosad.grid(column=3, row=0, sticky="nw")
 
-        joogiretsept = Label(retseptiraam, text="sinu joogi retsept:", bg="lavender")
+        joogiretsept = Label(retseptiraam, text="the recipe for your drink:", bg="lavender")
         joogiretsept.grid(column=3, row=2, sticky="nw")
+
+        #tee koostisosade list, mis läheb tkinteri aknasse
         prinditav_koostisosa=""
         for koostiosa in joogiväljund(data)[0].split(","):
             prinditav_koostisosa+="-"
@@ -70,21 +66,21 @@ def lbValik(synd):
             prinditav_koostisosa+="\n"
         prinditav_koostisosa=prinditav_koostisosa.strip()
 
-        joogi_koostisosad=Label(retseptiraam,text=prinditav_koostisosa,wraplength=200,justify="left")
-        joogi_koostisosad.grid(column=3,row=1,sticky="w")
-        joogi_retsept=Label(retseptiraam,text=joogiväljund(data)[1],wraplength=200,justify="left")
-        joogi_retsept.grid(column=3,row=3,sticky="w")
+        #pane koostisosade list ja retsept tkinteri aknasse
+        Label(retseptiraam,text=prinditav_koostisosa,wraplength=200,justify="left").grid(column=3,row=1,sticky="w")
+        Label(retseptiraam,text=joogiväljund(data)[1],wraplength=200,justify="left").grid(column=3,row=3,sticky="w")
 
+        #loe välja pilt formaadis, et see sobiks tkinterisse
         data = urllib.request.urlopen(joogiväljund(data)[2]).read()
         piltAlgne = Image.open(io.BytesIO(data))
-        piltAlgne = ImageOps.contain(piltAlgne, (190, 2000))
+        piltAlgne = ImageOps.contain(piltAlgne, (190, 6969))
         pilt = ImageTk.PhotoImage(piltAlgne)
 
-        tühi=Label(retseptiraam,text="",bg="lavender")
-        tühi.grid(column=3,row=4)
+        #pane pilt tkinteri aknasse
+        Label(retseptiraam,text="",bg="lavender").grid(column=3,row=4)
+        Label(retseptiraam,image=pilt).grid(column=3,row=5,sticky="w")
 
-        joogi_pilt=Label(retseptiraam,image=pilt)
-        joogi_pilt.grid(column=3,row=5,sticky="w")
+        #ilma selleta ei tööta....
         pildid.append(pilt)
 
 
@@ -93,24 +89,11 @@ def lbValik(synd):
         print("")
 
 
-def tee_kastid():
-    rida = 2
-    global kastid
-    kastid = {}
-    for koostisosa in range(len(koostisosad)):
-        nimi = koostisosad[koostisosa]
-        rida += 1
-        current_var = IntVar()
-        #######
-        current_box = Checkbutton(raam, text=nimi, variable=current_var, background="lavender", command=tagasta)
-        current_box.grid(row=rida, sticky=W)
-        current_box.var = current_var
-        kastid[current_box] = nimi
-
 
 def tee_kastid_otsi():#teeb ainult need kastid kus on sõne sees ("u"->"Rum","Sugar")
     sõne=tk_name.get()
     rida = 2
+    tulp=0
     global kastid
     global vähem_koostisosi
     kastid = {}
@@ -125,12 +108,18 @@ def tee_kastid_otsi():#teeb ainult need kastid kus on sõne sees ("u"->"Rum","Su
         rida += 1
         current_var = IntVar()
         current_box = Checkbutton(raam, text=nimi, variable=current_var, background="lavender", command=tagasta)
-        current_box.grid(row=rida, sticky=W)
+        current_box.grid(row=rida,column=tulp, sticky=W)
         current_box.var = current_var
         kastid[current_box] = nimi
+        if not tulp==1:
+            if rida==24:
+                tulp+=1
+                rida=0
 
+
+#iga kord kui tekstikasti midagi kirjutatakse, kustutatakse kõik checkboxid ära
+#ja tehakse uuesti.
 def text_changed(*args):
-    #print( tk_name.get() )
     for kast in kastid:
         kast.destroy()
     tee_kastid_otsi()
@@ -150,21 +139,21 @@ raam.grid()
 
 #vaheraam
 vaheraam=Frame(raam,bg="lavender")
-vaheraam.grid(column=1,rowspan=20, sticky="n")
+vaheraam.grid(column=2,rowspan=20, sticky="n")
 
 
 #parempoolne raam
 #see on retsepti, pildi jne jaoks
 retseptiraam=Frame(raam,bg="lavender")
-retseptiraam.grid(column=3,row=0,rowspan=20,sticky="ne")
+retseptiraam.grid(column=3,row=0,rowspan=40,sticky="ne")
 
-joogikoostisosad=Label(retseptiraam,text="sinu joogiks vajaminevad koostisosad:",bg="lavender")
+joogikoostisosad=Label(retseptiraam,text="the ingredients necessary for your drink:",bg="lavender")
 joogikoostisosad.grid(column=3,row=0,sticky="nw")
 
 tühi=Label(retseptiraam,text="",bg="lavender")#loll lahendus, aga ma olengi loll~
 tühi.grid(column=3,row=1,sticky="nw")
 
-joogiretsept=Label(retseptiraam,text="sinu joogi retsept:",bg="lavender")
+joogiretsept=Label(retseptiraam,text="the recipe for your drink:",bg="lavender")
 joogiretsept.grid(column=3,row=2,sticky="nw")
 
 
@@ -173,7 +162,7 @@ joogiretsept.grid(column=3,row=2,sticky="nw")
 
 
 #LABEL "Mis koostisosad sul olemas on?"
-silt=Label(raam,text="Mis koostisosad sul olemas on?",background="lavender")
+silt=Label(raam,text="what ingredients do you currently have?",background="lavender")
 silt.grid(row=0, sticky="w")
 
 #SEARCHBOX
@@ -183,7 +172,7 @@ sisend = Entry(raam, textvariable=tk_name)
 sisend.grid(row=1)
 
 
-misJooki = Label(vaheraam, text="Mis jooki sa teha tahad", background="lavender")
+misJooki = Label(vaheraam, text="what are you feeling?", background="lavender")
 misJooki.grid(row=0,sticky="n")
 
 lb=Listbox(vaheraam,height=20)
@@ -195,7 +184,7 @@ lb.grid()
 
 
 
-tee_kastid()
+tee_kastid_otsi()
 
 main.mainloop()
 
