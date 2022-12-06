@@ -1,5 +1,8 @@
 from luger import *
+import urllib.request
 from tkinter import *
+from PIL import ImageTk, Image, ImageOps
+import io
 
 
 #FUNK MIS KÄIVATAKSE JUHUL KUI KASTI VAJUTATAKSE
@@ -35,6 +38,10 @@ def tagasta():
 
     lb.bind("<<ListboxSelect>>", lbValik)
 
+
+pildid = []
+
+
 def lbValik(synd):
     valik = synd.widget.curselection()
     if valik:
@@ -67,6 +74,20 @@ def lbValik(synd):
         joogi_koostisosad.grid(column=3,row=1,sticky="w")
         joogi_retsept=Label(retseptiraam,text=joogiväljund(data)[1],wraplength=200,justify="left")
         joogi_retsept.grid(column=3,row=3,sticky="w")
+
+        data = urllib.request.urlopen(joogiväljund(data)[2]).read()
+        piltAlgne = Image.open(io.BytesIO(data))
+        piltAlgne = ImageOps.contain(piltAlgne, (190, 2000))
+        pilt = ImageTk.PhotoImage(piltAlgne)
+
+        tühi=Label(retseptiraam,text="",bg="lavender")
+        tühi.grid(column=3,row=4)
+
+        joogi_pilt=Label(retseptiraam,image=pilt)
+        joogi_pilt.grid(column=3,row=5,sticky="w")
+        pildid.append(pilt)
+
+
 
     else:
         print("")
