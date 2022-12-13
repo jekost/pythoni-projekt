@@ -37,8 +37,11 @@ def sisendi_otsimine(sisend):#listina
         for osa in sisend:
             if osa in sisu:
                 test.append(osa)
-                if sisu == test:
+                #if sisu == test:
+                #    valitud_joogid.append(võti)
+                if set(sisu).issubset(test):
                     valitud_joogid.append(võti)
+
                 
     return valitud_joogid
 
