@@ -1,8 +1,13 @@
-soup.py loeb internetist välja kokteilid, retsepid, koostisosad
-algne lehekülg, kust ta lugemist alustab on hetkel salvestatud minu laiskuse tõttu kama.txt faili
-luger.py teeb soup.py teksti tulevasele programmile loetavaks
-tkinter1.py on tkinteriga tutvumine, milles kavatseme front endi teha
+##cocktail time
+
+this is a small project for a program that searches for the cocktails available to you by ingredient availability
 
 
+necessary files for running the program:
 
-kavatseme teha kõik koostiosad valitavaks checkboxidega, ning seejärel tuleb kasutajale list kokteilidest, mille jaoks tal koostisosad olemas on. seejärel saab kasutaja valida, mis ta teha soovib ning talle kuvatakse vastav retsept
+cocktail-time.py - the program itself
+luger.py - for formatting info from info.txt
+info.txt - the database
+pildid/ - folder for the pictures
+
+
