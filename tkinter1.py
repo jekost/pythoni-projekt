@@ -1,9 +1,7 @@
 from luger import *
 from tkinter import *
-from PIL import ImageTk, Image, ImageOps
+from PIL import ImageTk, Image
 import os
-
-
 
 #FUNK MIS KÄIVATAKSE JUHUL KUI KASTI KIRJUTATAKSE MIDAGI
 
@@ -96,11 +94,6 @@ def lbValik(synd):
 
 
 
-    else:
-        print("")
-
-
-
 def tee_kastid_otsi():#teeb ainult need kastid kus on sõne sees ("u"->"Rum","Sugar")
     sõne=tk_name.get()
     rida = 2
@@ -116,7 +109,7 @@ def tee_kastid_otsi():#teeb ainult need kastid kus on sõne sees ("u"->"Rum","Su
     global kastid_ekraanil
     kastid_ekraanil=[]
 
-    for koostisosa in range(len(vähem_koostisosi)):
+    for koostisosa in range(22):
         nimi = vähem_koostisosi[koostisosa]
         kastid_ekraanil.append(nimi)
         rida += 1
@@ -159,7 +152,7 @@ def text_changed(*args):
     tee_kastid_otsi()
 
 aktiivsed_kastid=[]         #need kastid mis on hetkel valitud, aga ei pruugi olla kuvatud
-pildid = [] #kast kus hoida pilte, millegipärast on see tarvis, muidu miski ei tööta...
+pildid = [] #list kus hoida pilte, millegipärast on see tarvis, muidu miski ei tööta...
 
 
 #pane paika tree et saada rootist piltide kausta
@@ -168,7 +161,6 @@ rel_path = "/pildid/"
 abs_file_path = abs_path+rel_path
 
 koostisosad=['White Rum', 'Sugar Syrup', 'Lime Juice', 'Gin', 'Dry Vermouth', 'Bourbon', 'Angostura Bitters', 'Orange Bitters', 'Citrus Vodka', 'Triple Sec', 'Cranberry Juice', 'Cachaca', 'Vodka', 'Coffee Liqueur', 'Cream', 'Milk', 'Pineapple Juice', 'Coconut Cream', 'Sweet Red Vermouth', 'Campari', 'Créme de Mure', 'Lemon Juice', 'Tequila', 'Simple Syrup', 'Dark Rum', 'Anejo Rum', 'Cola', 'Rye Whiskey', 'Absinthe', ' Peychauds Bitters', 'Peppered Vodka', 'Sweet Vermouth', 'Tomato Juice', 'Tobasco sauce', 'Salt', 'Pepper', 'Gomme syrup', 'Light Rum', 'Orgeat Syrup', 'Amaretto', 'Egg-White', 'Cherry Heering', 'Benedictine', 'Soda Water', 'Chambord', ' Pineapple Juice', 'Vanilla Vodka', 'Kahlua', 'Bacardi Rum', 'Strawberry Liqueur', 'Lime juice', 'Caorunn Gin', 'Raspberry Syrup', 'Knob Creek Bourbon', 'Bourbon Whiskey', 'Apple Schapps', 'Brandy', 'Créme de Cacao', 'Pink Grapefruit Juice', 'Runny Honey', 'Scotch Whisky', 'Whiskey Liqueur', 'Pisco', 'Orange Juice', 'Champagne', 'Aged Rum', 'Creme de Banane', 'Creme de Mure', 'Orange Liqueur', 'Peach Schnapps', 'Créme de Cassis', 'Prosecco', 'Peach puree', 'Peach Bitters', 'Dry Sherry', 'Grapefruit Juice', 'Irish Cream Liqueur', 'freshly squeezed Orange Juice', 'Cognac', 'Double Cream', 'Raspberry Liqueur', 'Egg White', 'Scotch Whiskey', 'Maraschino Liqueur', 'Vanilla Sugar Syrup', 'Premium Gin', 'Lime Cordial', 'Baileys Cream Liqueur', 'Citron Vodka', 'Elderflower Cordial', 'Passoa', ' Lemon Juice', 'Grapefruit Soda', 'Squeezed Lemon Juice', 'Golden Rum', '151 Rum', 'Falernum', 'of Soda Water', 'Raspberry Vodka', 'Black Raspberry Liqueur', ' Cranberry Juice', 'Yellow Chartreuse', 'Blue WKD', 'Port', ' Black Raspberry Liqueur', 'Melon Liqueur', 'Sweet and Sour mix', 'Lemon and Lime Soda', 'Drambuie', 'Grapefruit Bitters']
-#koostisosad=['Tequila', 'White Rum', 'Sugar Syrup', 'Lime Juice', 'Dry Vermouth', 'Gin', 'Sugar']
 
 #MAIN
 main=Tk()
