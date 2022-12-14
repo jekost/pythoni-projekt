@@ -1,4 +1,4 @@
-##cocktail time
+cocktail time
 
 this is a small project for a program that searches for the cocktails available to you by ingredient availability
 
